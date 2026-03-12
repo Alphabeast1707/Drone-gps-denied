@@ -60,8 +60,8 @@ sudo raspi-config
 
 ### 3. Print AprilTags
 - Family: **tag36h11**
-- Print IDs 1, 2, 3, 4 at **20 cm** size (corner tags)
-- Print ID 5 at **10 cm** size (center landing tag)
+- Print IDs 1, 2, 3, 4 at **15 cm** (150 mm) size — corner tags
+- Print ID 5 at **10 cm** (100 mm) size — center landing tag
 - Download from: https://github.com/AprilRobotics/apriltag-imgs
 
 ### 4. Run stages in order
@@ -88,24 +88,33 @@ python3 visual_odometry.py
 
 ---
 
-## 🎯 Landing Pad Layout
+## 🎯 Landing Pad / Base Station Layout
+
+From engineering drawing — total pad ~688.91 mm:
 
 ```
-    Tag1 (20cm)       Tag2 (20cm)
-      □─────────────────□
-      │                 │
-      │                 │
-      │      □          │
-      │    Tag5         │
-      │   (10cm)        │
-      │   CENTER        │
-      │                 │
-      □─────────────────□
-    Tag3 (20cm)       Tag4 (20cm)
+         150mm          388.91mm         150mm
+       ┌──────┐                        ┌──────┐
+       │Tag 1 │                        │Tag 2 │  150mm
+       │15×15 │                        │15×15 │
+       └──────┘                        └──────┘
+                    ╭─── R275 ───╮
+                   ╭─ R163.48 ─╮
+                   │    ┌────┐  │
+                   │    │Tag5│  │
+                   │    │10cm│  │
+                   │    └────┘  │
+                   ╰────────────╯
+                    ╰───────────╯
+       ┌──────┐                        ┌──────┐
+       │Tag 3 │                        │Tag 4 │  150mm
+       │15×15 │                        │15×15 │
+       └──────┘                        └──────┘
 ```
 
-- **Tags 1–4**: Guide drone toward center from far away
-- **Tag 5**: Precision landing (detected up close)
+- **Tags 1–4** (15 cm): Guide drone toward center from far away
+- **Tag 5** (10 cm): Precision landing (detected up close)
+- **Two concentric circles**: R163.48 mm and R275 mm
 
 ---
 
@@ -114,9 +123,11 @@ python3 visual_odometry.py
 | Mode | FPS |
 |------|-----|
 | Default AprilTag | 15–20 |
-| Decimate 2 | 35–50 |
-| Decimate 3 + 4 threads | 60–80 |
-| Decimate 4 + 4 threads + ROI | **80–120** |
+| Decimate 2 + 4 threads | **35–60** |
+| Decimate 2 + ROI tracking | **50–80** |
+| Decimate 3 (if tags > 20cm) | 80–120 |
+
+> Note: With 15cm corner tags, `decimate=2` is recommended for reliable detection.
 
 ---
 
@@ -124,11 +135,13 @@ python3 visual_odometry.py
 
 | Parameter | Default | Effect |
 |-----------|---------|--------|
-| `TAG_QUAD_DECIMATE` | 3.0 | Higher = faster, lower resolution |
+| `TAG_QUAD_DECIMATE` | 2.0 | Lower for 15cm tags (need resolution) |
 | `TAG_NTHREADS` | 4 | Use all Pi cores |
-| `TAG_REFINE_EDGES` | False | Disable for speed |
+| `TAG_REFINE_EDGES` | True | On for smaller tags (better accuracy) |
 | `ROI_ENABLED` | True | Track near last position |
-| `ROI_MARGIN` | 100 px | ROI search area |
+| `ROI_MARGIN` | 180 px | Sized for ~69cm pad |
+| `CORNER_TAG_SIZE` | 0.15 m | Physical corner tag size |
+| `CENTER_TAG_SIZE` | 0.10 m | Physical center tag size |
 
 ---
 

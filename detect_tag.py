@@ -3,13 +3,15 @@ Stage 1 — High-Speed AprilTag Detection
 =========================================
 Detects AprilTags from camera feed with FPS measurement.
 
-Optimizations applied:
-  • quad_decimate = 3  (downsample for speed)
+Optimized for base station:
+  • 4 corner tags: 15×15 cm (tag36h11)
+  • 1 center tag:  10×10 cm (tag36h11)
+  • quad_decimate = 2  (need resolution for 15cm tags)
   • nthreads = 4       (use all Pi 4 cores)
-  • refine_edges off   (reduce CPU work)
+  • refine_edges on    (needed for smaller tags)
   • grayscale only     (skip color processing)
 
-Target: 80–120 FPS on Raspberry Pi 4
+Target: 40–80 FPS on Raspberry Pi 4
 
 Usage:
     python3 detect_tag.py
