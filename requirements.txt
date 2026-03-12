@@ -1,0 +1,6 @@
+# GPS-Denied Drone Vision System — Python dependencies
+# Install with: pip3 install -r requirements.txt
+
+numpy>=1.21.0
+opencv-python>=4.5.0
+pupil-apriltags>=1.0.0
