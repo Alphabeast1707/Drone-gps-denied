@@ -1,4 +1,4 @@
-# 🚁 GPS-Denied Drone Vision System
+#  GPS-Denied Drone Vision System
 
 **ISRO Drone Challenge — Precision Landing with AprilTags**
 
@@ -23,7 +23,7 @@ A high-speed computer vision pipeline for autonomous drone landing on Raspberry 
             └───────────────────┘
 ```
 
-## 🗂️ Project Files
+##  Project Files
 
 | File | Stage | Description |
 |------|-------|-------------|
@@ -88,7 +88,7 @@ python3 visual_odometry.py
 
 ---
 
-## 🎯 Landing Pad / Base Station Layout
+##  Landing Pad / Base Station Layout
 
 From engineering drawing — total pad ~688.91 mm:
 
@@ -131,7 +131,7 @@ From engineering drawing — total pad ~688.91 mm:
 
 ---
 
-## 🔧 Key Parameters (config.py)
+##  Key Parameters (config.py)
 
 | Parameter | Default | Effect |
 |-----------|---------|--------|
@@ -161,7 +161,7 @@ Use `pymavlink` or `MAVSDK` to send commands.
 
 ---
 
-## 🧠 5-Stage Roadmap
+## 5-Stage Roadmap
 
 1. ✅ **AprilTag Detection** — `detect_tag.py`
 2. ✅ **Pose Estimation** — `pose_estimation.py`
