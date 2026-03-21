@@ -33,7 +33,8 @@ import csv
 import os
 from pupil_apriltags import Detector
 from config import (
-    CAMERA_INDEX, CAMERA_WIDTH, CAMERA_HEIGHT,
+    CAMERA_INDEX, CAMERA_WIDTH, CAMERA_HEIGHT, CAMERA_FPS, CAMERA_FOURCC,
+    CAMERA_BACKEND,
     CAMERA_PARAMS, CAMERA_FX, CAMERA_FY,
     TAG_FAMILY, TAG_NTHREADS, TAG_QUAD_DECIMATE,
     TAG_QUAD_SIGMA, TAG_REFINE_EDGES, TAG_DECODE_SHARPENING,
@@ -108,10 +109,12 @@ class LandingController:
     # ── Setup ─────────────────────────────────
 
     def _setup_camera(self):
-        cap = cv2.VideoCapture(CAMERA_INDEX)
+        cap = cv2.VideoCapture(CAMERA_INDEX, cv2.CAP_V4L2)
+        fourcc = cv2.VideoWriter_fourcc(*CAMERA_FOURCC)
+        cap.set(cv2.CAP_PROP_FOURCC, fourcc)
         cap.set(cv2.CAP_PROP_FRAME_WIDTH, CAMERA_WIDTH)
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, CAMERA_HEIGHT)
-        cap.set(cv2.CAP_PROP_FPS, 90)
+        cap.set(cv2.CAP_PROP_FPS, CAMERA_FPS)
         cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
         if not cap.isOpened():
             print("[ERROR] Cannot open camera.")

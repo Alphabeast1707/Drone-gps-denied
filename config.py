@@ -15,21 +15,27 @@ Base Station Dimensions (from engineering drawing):
 # ──────────────────────────────────────────────
 # Camera settings
 # ──────────────────────────────────────────────
-CAMERA_INDEX = 0              # 0 for CSI / USB camera
+CAMERA_INDEX = 0              # 0 for USB webcam (Microsoft LifeCam HD-5000)
+CAMERA_BACKEND = "V4L2"       # Force V4L2 backend (not GStreamer)
 CAMERA_WIDTH = 640
 CAMERA_HEIGHT = 480
-CAMERA_FPS = 90               # Target FPS (CSI camera supports up to 90)
+CAMERA_FPS = 30               # Max 30 fps for LifeCam HD-5000 at 640x480
+CAMERA_FOURCC = "MJPG"        # Use MJPG for best FPS (YUYV is slower on USB)
 
 # ──────────────────────────────────────────────
-# Camera intrinsic parameters (approximate)
-# You should calibrate your own camera for best results.
-# These are rough defaults for Raspberry Pi Camera v2 at 640x480.
+# Camera intrinsic parameters (CALIBRATED)
+# Calibrated on 2026-03-13 with 20 checkerboard images
+# Reprojection error: 0.1236 px
+# Camera: Microsoft LifeCam HD-5000 at 640x480
 # ──────────────────────────────────────────────
-CAMERA_FX = 600.0             # Focal length X (pixels)
-CAMERA_FY = 600.0             # Focal length Y (pixels)
-CAMERA_CX = 320.0             # Principal point X (pixels)
-CAMERA_CY = 240.0             # Principal point Y (pixels)
+CAMERA_FX = 690.11            # Focal length X (pixels)
+CAMERA_FY = 691.40            # Focal length Y (pixels)
+CAMERA_CX = 303.24            # Principal point X (pixels)
+CAMERA_CY = 187.94            # Principal point Y (pixels)
 CAMERA_PARAMS = [CAMERA_FX, CAMERA_FY, CAMERA_CX, CAMERA_CY]
+
+# Distortion coefficients [k1, k2, p1, p2, k3]
+CAMERA_DIST_COEFFS = [-0.000930, 0.421920, -0.024044, -0.021204, -1.327173]
 
 # ──────────────────────────────────────────────
 # AprilTag detector settings (high-speed config)
